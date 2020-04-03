@@ -57,10 +57,3 @@ for i,j,k in zip(lam, labs, np.arange(len(lam))):
     Y = np.hstack((Y,IRF(Y_0, Y_bar, t, i, j)))
 del i, j ,k  
 Y = Y.reshape(len(lam), len(t)).T
-# 
-# In newer versions of matplotlib, if you do not set the tick labels with a bunch of str values, they are '' by default (and when the plot is draw the labels are simply the ticks values). Knowing that, to get your desired output would require something like this:
-
-# >>> from pylab import *
-# >>> a=axes.get_xticks().tolist()
-# >>> a[1]='change'
-# >>> axes.set_xticklabels(a)
