@@ -1,33 +1,37 @@
-# -*- coding: utf-8 -*-
 """
 Created on Fri Apr  3 10:03:25 2020
 
 @author: benja
 
-This code generate some figures which are used in my teaching class in 
+This code generates some figures which are used in my teaching class in 
 "Advanced Macroecnomics". 
 In the figures, different dynamic adjustment cases for first-order difference
 equations are shown
 """
 
+# Load libraries
 import numpy as np
 import matplotlib.pyplot as plt
 import os
 
-
+# define time index
 t = np.arange(0,11)
 
+# lam = lambda captures the eigenvalues
 lam     = [0.7, 1.3, -0.7, -1.3]
+# Define labels for the dynamic adjustments
 labs    = ['Monotonic Stable (MS)', 'Monotonic Unstable (MUS)',
            'Oscillatory Stable (OS)', 'Oscillatory Unstable (OUS)']
+# Starting value
 Y_0     = 110
+# Steady State
 Y_bar   = 100
+
 
 def IRF(x0, xbar, t, l, lab):
 # Compute general solution 
     x = (x0 - xbar)*np.power(l,t)+xbar
     x = np.array(x)
-    # print(x.dtype)
 # plot
     fig, ax = plt.subplots()
     ax.plot(t,x, lw = 2)
@@ -40,7 +44,6 @@ def IRF(x0, xbar, t, l, lab):
     ax.hlines(y=xbar, xmin = 0, xmax = t[-1], lw=1.0, color = 'black')
     a    = ax.get_yticks().tolist()
     a[1] = r'$\bar{Y}=$'+str(xbar)
-    # print(a)
     if float(x0) in a:
         a_x0 = a.index(float(x0))
         a[a_x0] = r'$Y_{0}=$'+str(x0)
@@ -53,7 +56,9 @@ def IRF(x0, xbar, t, l, lab):
 
 # Initialize    
 Y = []
+# Compute and Plot for the eigenvalues depicted in lam
 for i,j,k in zip(lam, labs, np.arange(len(lam))): 
     Y = np.hstack((Y,IRF(Y_0, Y_bar, t, i, j)))
 del i, j ,k  
+# Brint the state variable in shape
 Y = Y.reshape(len(lam), len(t)).T
